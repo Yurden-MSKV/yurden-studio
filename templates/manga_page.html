@@ -1,0 +1,59 @@
+{% extends "top_panel.html" %}
+{% load static %}
+
+{% block title %}
+    <title>{{ manga.manga_name }}</title>
+{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'manga_site/css/manga_page.css' %}">
+    <div class="main_container">
+        <div class="info_block">
+            <div class="name_n_description">
+                <div class="name">
+                    <h1>{{ manga.manga_name }}</h1>
+                </div>
+                <div class="description">
+                    <p>{{ manga.manga_description }}</p>
+                </div>
+            </div>
+            <div class="genres_block">
+                {% for genre in genres %}
+                    <div class="genre">
+                        <p>{{ genre }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="chapters_block">
+            {% for volume in volumes %}
+                <div class="volume_container">
+                    <div class="volume_cover">
+                        <img src="{{ volume.volume_cover.url }}">
+                    </div>
+                    <div class="volume_content">
+                        <div class="number_n_desc">
+                            <div class="volume_number">
+                                <h1>Том {{ volume.volume_number }}</h1>
+                            </div>
+                            <div class="volume_desc">
+                                <p>{{ volume.volume_description }}</p>
+                            </div>
+                        </div>
+                        <div class="volume_list">
+                            <ul>
+                                {% for chapter in volume.chapters.all %}
+                                    <li><a href="
+{% url 'chapter-page' manga_slug=manga.manga_slug chapter_number=chapter.get_chapter_display %}">
+                                        Глава {{ chapter.get_chapter_display}} — {{ chapter.chapter_title }}
+                                    </a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

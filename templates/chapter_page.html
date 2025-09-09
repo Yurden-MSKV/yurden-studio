@@ -1,0 +1,19 @@
+{% extends "top_panel.html" %}
+{% load static %}
+
+{% block title %}
+    <title>{{ manga.manga_name }} - Глава {{ chapter.get_chapter_display }}</title>
+{% endblock %}
+
+{% block content %}
+    
+    <link rel="stylesheet" href="{% static 'manga_site/css/chapter_page.css' %}">
+    <div class="main_container">
+        {% for image in images %}
+            <div class="image_block">
+                <img src="{{ image.page_image.url }}">
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

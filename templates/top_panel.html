@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        
+    {% endblock %}
+</head>
+<body>
+    {#  Контейнер всей страницы  #}
+        {% block top_panel %}
+            <link rel="stylesheet" href="{% static 'main_section/css/top_panel.css' %}">
+            {#  Верхняя панель  #}
+            <div class="top_panel_container">
+                <div class="site_name_container">
+                    <p>Студия Юрия Московцева</p>
+                </div>
+                <div class="buttons_container">
+                    <div class="main_page_link">
+{#                        <a href="#">Главная</a>#}
+                        <a href="{% url 'home-page' %}">Главная</a>
+                    </div>
+                    <div class="catalog_link">
+                        <a href="#">Каталог</a>
+                    </div>
+                    <div class="info_link">
+                        <a href="#">Инфо</a>
+                    </div>
+                </div>
+                <div class="profile_container">
+                    <a href="#">Мой профиль</a>
+                </div>
+            </div>
+    
+        {% endblock %}
+
+        {% block content %}
+        
+        {% endblock %}
+
+</body>
+</html>

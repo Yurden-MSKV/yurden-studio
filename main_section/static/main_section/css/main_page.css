@@ -1,0 +1,243 @@
+@font-face {
+    font-family: 'ClearSans';
+    src: url('../fonts/ClearSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ClearSans';
+    src: url('../fonts/ClearSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body, html {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'ClearSans';
+}
+
+.main_container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    background: #FAFAFA;
+    width: 1000px;
+    height: fit-content;
+    margin: 10px auto;
+    /*border: 2px solid #000000;*/
+    border-radius: 5px;
+}
+
+.updates_container {
+    width: 490px;
+    height: fit-content;
+    border: 2px solid #000000;
+    border-radius: 5px;
+}
+
+.news_container {
+    width: 490px;
+    height: fit-content;
+    /*margin: 10px 10px 10px 0;*/
+    border: 2px solid #000000;
+    border-radius: 5px;
+}
+
+.block_title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    /*border-bottom: 2px solid black;*/
+}
+
+.block_title h1 {
+    font-size: 20px;
+    text-align: center;
+    margin: 0 auto;
+    /*border: 1px solid red;*/
+}
+
+.block_container {
+    /*display: flex;*/
+    width: 100%;
+    /*border: 1px solid red;*/
+    /*background-color: black;*/
+}
+
+.block {
+    display: flex;
+    width: 100%;
+    /*border: 1px solid red;*/
+    border-top: 2px solid black;
+    height: fit-content;
+}
+
+.post_block {
+    display: flex;
+    width: 100%;
+    /*border: 1px solid red;*/
+    border-top: 2px solid black;
+    height: fit-content;
+}
+
+.block_img {
+    margin: 10px 0 10px 10px;
+    height: fit-content;
+    /*border: 1px solid red;*/
+}
+
+.block_img img {
+    display: block;
+    width: 80px;
+    /*border: 1px solid red;*/
+}
+
+.block_text {
+    display: flex;
+    flex-direction: column;
+    /*align-content: center;*/
+    width: 100%;
+    margin: 10px;
+    /*border: 1px solid red;*/
+}
+
+.block_text h1 {
+    margin-top: 0;
+    font-size: 20px;
+    /*border: 1px solid red;*/
+}
+
+.block_text h2 {
+    margin-top: 0;
+    font-size: 17px;
+    font-weight: normal;
+    /*border: 1px solid red;*/
+}
+
+.block_text p {
+    font-size: 15px;
+    margin-left: auto;
+    margin-bottom: 0;
+    width: fit-content;
+    /*border: 1px solid red;*/
+}
+
+.block_info {
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.block_info a {
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    margin: 0;
+    padding: 2px 5px;
+    transition: all 0.2s ease;
+    border-radius: 5px;
+}
+
+.block_info a:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.block_chapters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /*border: 1px solid red;*/
+}
+
+.one_chapter {
+    padding: 2px 5px;
+    width: fit-content;
+    max-width: 100%;
+    /*border: 1px solid #e74c3c;*/
+    border-radius: 5px;
+    background: #fff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.one_chapter:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    /*background-color: #fff5f5;*/
+}
+
+.one_chapter a {
+    /*font-size: 16px;*/
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: black;
+    display: block;
+    width: 100%;
+}
+
+.chapter_date {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-top: 3px;
+}
+
+.post_block {
+    display: flex;
+    flex-direction: column;
+    /*border: 1px solid red;*/
+    border-top: 2px solid black;
+}
+
+.post_block_title {
+    margin: 10px 0 10px 10px;
+    width: fit-content;
+    /*border: 1px solid red;*/
+}
+
+.post_block_title h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+}
+
+.post_block_content {
+    margin: 0 0 10px 10px;
+    width: fit-content;
+    /*border: 1px solid red;*/
+}
+
+.post_block_content p {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
+
+.read_more {
+    display: flex;
+    margin: 0 10px 10px auto;
+    transition: all 0.2s ease;
+    /*border: 1px solid red;*/
+    border-radius: 5px;
+}
+
+.read_more:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.read_more a {
+    margin: auto 0;
+    padding: 2px 5px;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    /*border: 1px solid red;*/
+}

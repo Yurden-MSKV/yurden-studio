@@ -1,0 +1,71 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls static %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+/* Используем CSS-переменные Django для совместимости с темами */
+.upload-section {
+    background: var(--body-bg);
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.upload-button {
+    background: var(--primary);
+    color: var(--primary-fg);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.upload-button:hover {
+    background: var(--primary-dark);
+}
+
+.upload-help {
+    color: var(--body-quiet-color);
+    font-size: 13px;
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+.upload-label {
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+    color: var(--body-fg);
+}
+</style>
+{% endblock %}
+
+{% block after_field_sets %}
+{{ block.super }}
+
+<div class="module aligned upload-section">
+    <h2>📁 Массовая загрузка страниц</h2>
+    <div class="form-row">
+        <div class="fieldBox">
+            <label for="id_images" class="upload-label">
+                Выберите изображения для загрузки:
+            </label>
+            <div style="margin-bottom: 15px;">
+                <input type="file" name="images" id="id_images" multiple
+                       class="vTextField" style="padding: 8px;">
+            </div>
+            <p class="upload-help">• Удерживайте Ctrl (Cmd на Mac) для выбора нескольких файлов</p>
+            <p class="upload-help">• Файлы будут автоматически пронумерованы по порядку</p>
+            <p class="upload-help">• Поддерживаются форматы: JPG, PNG, GIF, WEBP</p>
+        </div>
+    </div>
+    <div class="submit-row" style="border: none; background: transparent; margin-top: 20px;">
+        <input type="submit" value="🚀 Загрузить выбранные файлы" name="upload_images"
+               class="upload-button default">
+    </div>
+</div>
+{% endblock %}
