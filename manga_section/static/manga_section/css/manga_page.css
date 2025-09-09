@@ -12,6 +12,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'ClearSans';
+    src: url('../fonts/ClearSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
 body, html {
     width: 100%;
     margin: 0;
@@ -86,14 +93,18 @@ body, html {
     justify-content: center;
     box-sizing: border-box;
     margin-right: 10px;
+    background: #FEE2E2;
+    border-radius: 15px;
+    /*border: 1px solid black;*/
 }
 
 .genres_block p {
+    color: #991B1B;
+    font-weight: 500;
     margin-top: 0;
     width: fit-content;
     padding: 4px 10px;
-    border: 2px solid black;
-    border-radius: 15px;
+
 }
 
 .chapters_block {

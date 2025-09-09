@@ -83,7 +83,7 @@ class ChapterImageInline(admin.TabularInline):
 
 @admin.register(Manga)
 class MangaAdmin(admin.ModelAdmin):
-    list_display = ['manga_name', 'get_genres', 'get_authors', 'cover']
+    list_display = ['manga_name', 'get_genres', 'get_authors']
     filter_horizontal = ['genres', 'authors']
     search_fields = ['manga_name']
 
@@ -104,17 +104,23 @@ class MangaAdmin(admin.ModelAdmin):
 
 @admin.register(Chapter)
 class ChapterAdmin(admin.ModelAdmin):
-    list_display = ['get_manga_name', 'ch_number', 'ch_name']
-    list_filter = ['manga']
+    list_display = ['get_manga_name', 'get_vol_number', 'ch_number', 'ch_name']
     search_fields = ['ch_number', 'ch_name']
 
     # Добавляем кастомный шаблон для массовой загрузки
     change_form_template = 'admin/manga_section/chapter_change_form.html'
 
     def get_manga_name(self, obj):
-        return obj.manga.manga_name
+        return obj.volume.manga.manga_name
 
     get_manga_name.short_description = 'Манга'
+
+    def get_vol_number(self, obj):
+        return obj.volume.vol_number
+
+    get_vol_number.short_description = 'Том'
+
+
 
     inlines = [ChapterImageInline]
 

@@ -18,8 +18,8 @@ class Author(models.Model):
     def __str__(self):
         return self.author_name
 
-def manga_cover_path(instance, filename):
-    return f'manga/covers/{instance.id}/{filename}'
+    # def manga_cover_path(instance, filename):
+    #     return f'manga/covers/{instance.id}/{filename}'
 
 class Manga(models.Model):
     manga_name = models.CharField(max_length=150,
@@ -32,19 +32,32 @@ class Manga(models.Model):
     authors = models.ManyToManyField(Author,
                                      verbose_name='Автор')
     description = models.TextField(verbose_name='Описание')
-    cover = models.ImageField(upload_to=manga_cover_path,
-                              verbose_name='Обложка')
+    # cover = models.ImageField(upload_to=manga_cover_path,
+    #                           verbose_name='Обложка')
 
     def __str__(self):
         return self.manga_name
 
+def volume_cover_path(instance, filename):
+    return f'manga/volumes/covers/{instance.id}/{filename}'
+
+class Volume(models.Model):
+    manga = models.ForeignKey(Manga,
+                              on_delete=models.CASCADE,
+                              related_name='volumes',
+                              verbose_name='Манга')
+    vol_number = models.PositiveIntegerField(verbose_name='Номер тома')
+    vol_cover = models.ImageField(upload_to=volume_cover_path)
+
+    def __str__(self):
+        return f'Том {str(self.vol_number)}'
+
 
 class Chapter(models.Model):
-    manga = models.ForeignKey(Manga,
+    volume = models.ForeignKey(Volume,
                               on_delete=models.CASCADE,
                               related_name='chapters',
                               verbose_name='Манга')
-    volume = models.PositiveIntegerField(verbose_name='Том')
     ch_number = models.PositiveIntegerField(verbose_name='Номер')
     ch_name = models.CharField(max_length=100,
                                verbose_name='Название')

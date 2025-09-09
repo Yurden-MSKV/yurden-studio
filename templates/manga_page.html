@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <link rel="stylesheet" href="{% static 'manga_site/css/manga_page.css' %}">
+    <link rel="stylesheet" href="{% static 'manga_section/css/manga_page.css' %}">
     <div class="main_container">
         <div class="info_block">
             <div class="name_n_description">
@@ -14,13 +14,13 @@
                     <h1>{{ manga.manga_name }}</h1>
                 </div>
                 <div class="description">
-                    <p>{{ manga.manga_description }}</p>
+                    <p>{{ manga.description }}</p>
                 </div>
             </div>
             <div class="genres_block">
                 {% for genre in genres %}
                     <div class="genre">
-                        <p>{{ genre }}</p>
+                        <p>{{ genre.genre_name }}</p>
                     </div>
                 {% endfor %}
             </div>

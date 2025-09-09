@@ -7,17 +7,16 @@ from django.shortcuts import render, get_object_or_404
 
 
 def manga_page(request, slug):
-    manga = get_object_or_404(Manga.objects.prefetch_related(
-        'genres',
-        'authors',
-        'cover',
-        'chapters',
+    manga = get_object_or_404(Manga.objects.prefetch_related('genres', 'authors'), manga_slug=slug)
+    '''manga_slug — поле из модели, оно сравнивается со slug из адресной строки'''
 
-        '''manga_slug — поле из модели, оно сравнивается со slug из адресной строки'''
-    ), manga_slug=slug)
+    genres = manga.genres.all()
+    authors = manga.authors.all()
 
     context = {
-        'manga': manga
+        'manga': manga,
+        'genres': genres,
+        'authors': authors,
     }
     return render(request, 'manga_page.html', context)
 
