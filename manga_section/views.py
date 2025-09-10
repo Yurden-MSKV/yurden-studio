@@ -39,12 +39,11 @@ def chapter_page(request, manga_slug, ch_number):
     except:
         raise Http404("Неверный формат номера главы")
 
-    # Ищем главу по номеру и связи с мангой
     chapter = get_object_or_404(
-        Chapter,
-        chapter_number=chapter_number_decimal,
-        manga=manga
+        Chapter.objects.filter(volume__manga=manga),
+        ch_number=ch_number
     )
+
     images = ChapterImage.objects.filter(chapter=chapter).order_by('page_number')
 
     context = {
