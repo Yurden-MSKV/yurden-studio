@@ -1,7 +1,8 @@
+from django.db.models import Prefetch
 from django.shortcuts import render
 from django.utils import timezone
 
-from manga_section.models import Chapter
+from manga_section.models import Chapter, Volume
 from post_section.models import Post
 
 def index(request):
@@ -11,25 +12,32 @@ def index(request):
 def main_page(request):
     last_week = timezone.now() - timezone.timedelta(days=7)
 
-    # Оптимизируем запросы с select_related и prefetch_related
+    # Оптимизируем запросы с prefetch_related для получения последних томов
     recent_chapters = Chapter.objects.filter(
         add_date__gte=last_week
     ).select_related(
-        'manga'
+        'volume__manga'
+    ).prefetch_related(
+        Prefetch('volume__manga__volumes',
+                 queryset=Volume.objects.order_by('-vol_number'),
+                 to_attr='latest_volumes')
     ).order_by('-add_date')
 
     recent_posts = Post.objects.filter(
         add_date__gte=last_week
     ).order_by('-add_date')
 
-    # Группируем в памяти без дополнительных запросов
     manga_dict = {}
-
     for chapter in recent_chapters:
-        manga = chapter.manga
+        manga = chapter.volume.manga
         if manga.id not in manga_dict:
+            # Получаем обложку последнего тома
+            latest_volume = manga.volumes.order_by('-vol_number').first()
+            cover = latest_volume.vol_cover if latest_volume else None
+
             manga_dict[manga.id] = {
                 'manga': manga,
+                'cover': cover,
                 'chapters': []
             }
         manga_dict[manga.id]['chapters'].append(chapter)

@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.db import models
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
-from manga_section.models import (Genre, Manga, Author, Chapter, ChapterImage)
+from manga_section.models import (Genre, Author, Manga, Volume, Chapter, ChapterImage)
 
 
 # Кастомный виджет для множественной загрузки файлов
@@ -46,7 +46,7 @@ class ChapterInline(admin.TabularInline):
 
     def edit_link(self, obj):
         if obj and obj.pk:
-            url = reverse('admin:manga_site_chapter_change', args=[obj.pk])
+            url = reverse('admin:manga_section_chapter_change', args=[obj.pk])
             return format_html('<a href="{}">⚙️ Редактировать главу</a>', url)
         return "Сначала сохраните главу"
 
@@ -80,6 +80,13 @@ class ChapterImageInline(admin.TabularInline):
 
     preview.short_description = 'Предпросмотр'
 
+class VolumeInline(admin.TabularInline):
+    model = Volume
+    extra = 1
+    fields = ['vol_number', 'vol_cover']
+
+    def has_header(self, request, obj=None):
+        return False
 
 @admin.register(Manga)
 class MangaAdmin(admin.ModelAdmin):
@@ -101,6 +108,20 @@ class MangaAdmin(admin.ModelAdmin):
 
     get_authors.short_description = 'Авторы'
 
+    inlines = [VolumeInline]
+
+
+@admin.register(Volume)
+class VolumeAdmin(admin.ModelAdmin):
+    list_display = ['get_manga_name', 'vol_number', 'vol_cover']
+
+    def get_manga_name(self, obj):
+        return obj.manga.manga_name
+
+    get_manga_name.short_description = 'Манга'
+
+    inlines = [ChapterInline]
+
 
 @admin.register(Chapter)
 class ChapterAdmin(admin.ModelAdmin):
@@ -119,8 +140,6 @@ class ChapterAdmin(admin.ModelAdmin):
         return obj.volume.vol_number
 
     get_vol_number.short_description = 'Том'
-
-
 
     inlines = [ChapterImageInline]
 

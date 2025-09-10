@@ -32,8 +32,13 @@ class Manga(models.Model):
     authors = models.ManyToManyField(Author,
                                      verbose_name='Автор')
     description = models.TextField(verbose_name='Описание')
-    # cover = models.ImageField(upload_to=manga_cover_path,
-    #                           verbose_name='Обложка')
+
+    def get_latest_volume_cover(self):
+        # Получаем последний том по номеру (или по дате, если нужно)
+        latest_volume = self.volumes.order_by('-vol_number').first()
+        if latest_volume and latest_volume.vol_cover:
+            return latest_volume.vol_cover
+        return None
 
     def __str__(self):
         return self.manga_name

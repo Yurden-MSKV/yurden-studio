@@ -74,6 +74,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 #     os.path.join(BASE_DIR, 'static'),     # Статика
 #     os.path.join(BASE_DIR, 'manga_section'),   # Код приложения
 #     os.path.join(BASE_DIR, 'post_section'),
+#     os.path.join(BASE_DIR, 'main_section'),
 # ]
 
 ROOT_URLCONF = 'studio_new.urls'

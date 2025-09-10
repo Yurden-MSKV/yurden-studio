@@ -29,23 +29,23 @@
             {% for volume in volumes %}
                 <div class="volume_container">
                     <div class="volume_cover">
-                        <img src="{{ volume.volume_cover.url }}">
+                        <img src="{{ volume.vol_cover.url }}">
                     </div>
                     <div class="volume_content">
                         <div class="number_n_desc">
                             <div class="volume_number">
-                                <h1>Том {{ volume.volume_number }}</h1>
+                                <h1>Том {{ volume.vol_number }}</h1>
                             </div>
                             <div class="volume_desc">
-                                <p>{{ volume.volume_description }}</p>
+{#                                <p>{{ volume.volume_description }}</p>#}
                             </div>
                         </div>
                         <div class="volume_list">
                             <ul>
                                 {% for chapter in volume.chapters.all %}
                                     <li><a href="
-{% url 'chapter-page' manga_slug=manga.manga_slug chapter_number=chapter.get_chapter_display %}">
-                                        Глава {{ chapter.get_chapter_display}} — {{ chapter.chapter_title }}
+{% url 'chapter-page' manga_slug=manga.manga_slug ch_number=chapter.get_chapter_display %}">
+                                        Глава {{ chapter.get_chapter_display}} — {{ chapter.ch_name }}
                                     </a></li>
                                 {% endfor %}
                             </ul>
