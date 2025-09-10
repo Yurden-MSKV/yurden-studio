@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Genre(models.Model):
@@ -20,6 +21,7 @@ class Author(models.Model):
 
     # def manga_cover_path(instance, filename):
     #     return f'manga/covers/{instance.id}/{filename}'
+
 
 class Manga(models.Model):
     manga_name = models.CharField(max_length=150,
@@ -43,8 +45,10 @@ class Manga(models.Model):
     def __str__(self):
         return self.manga_name
 
+
 def volume_cover_path(instance, filename):
     return f'manga/volumes/covers/{instance.id}/{filename}'
+
 
 class Volume(models.Model):
     manga = models.ForeignKey(Manga,
@@ -58,11 +62,23 @@ class Volume(models.Model):
         return f'Том {str(self.vol_number)}'
 
 
+class ChapterLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    chapter = models.ForeignKey('manga_section.Chapter', on_delete=models.CASCADE, related_name='likes')
+    is_like = models.BooleanField(null=True, blank=True)  # True - лайк, False - дизлайк, None - нет оценки
+
+    class Meta:
+        unique_together = ('user', 'chapter')  # Один пользователь - одна оценка на главу
+
+    def __str__(self):
+        return f"{self.user.username}: {'Like' if self.is_like else 'Dislike'} on {self.chapter}"
+
+
 class Chapter(models.Model):
     volume = models.ForeignKey(Volume,
-                              on_delete=models.CASCADE,
-                              related_name='chapters',
-                              verbose_name='Манга')
+                               on_delete=models.CASCADE,
+                               related_name='chapters',
+                               verbose_name='Том')
     ch_number = models.PositiveIntegerField(verbose_name='Номер')
     ch_name = models.CharField(max_length=100,
                                verbose_name='Название')
@@ -78,6 +94,44 @@ class Chapter(models.Model):
             return str(int(num))
         else:
             return str(num)
+
+    # Добавляем свойства для оценок
+    @property
+    def like_count(self):
+        return self.likes.filter(is_like=True).count()
+
+    @property
+    def dislike_count(self):
+        return self.likes.filter(is_like=False).count()
+
+    @property
+    def total_votes(self):
+        return self.like_count + self.dislike_count
+
+    @property
+    def like_percentage(self):
+        if self.total_votes == 0:
+            return 0
+        return round((self.like_count / self.total_votes) * 100)
+
+    @property
+    def dislike_percentage(self):
+        if self.total_votes == 0:
+            return 0
+        return round((self.dislike_count / self.total_votes) * 100)
+
+    def get_user_reaction(self):
+        """Получить реакцию пользователя (для использования в шаблоне)"""
+        # Этот метод будет работать только если мы передали пользователя в главу
+        if hasattr(self, '_current_user'):
+            user = self._current_user
+            if user.is_authenticated:
+                try:
+                    like = self.likes.get(user=user)
+                    return like.is_like
+                except:
+                    return None
+        return None
 
 
 def chapter_image_path(instance, filename):
