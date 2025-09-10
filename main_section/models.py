@@ -3,7 +3,7 @@ from django.db import models
 
 from manga_section.models import Chapter
 
-
+# TODO: сделать миграцию
 class ChapterLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE,
