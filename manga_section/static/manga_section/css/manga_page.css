@@ -134,7 +134,7 @@ body, html {
     display: flex;
     flex-direction: column;
     flex: 1;
-    border: 1px solid deepskyblue;
+    /*border: 1px solid deepskyblue;*/
 }
 
 .number_n_desc {
@@ -162,18 +162,30 @@ body, html {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     width: 100%;
     padding: 0;
-    margin: 10px;
     height: fit-content;
 }
 
 .chapter-item {
+    display: flex;
+    flex-direction: row;
     padding: 2px 5px;
-    width: 100%;
     border: 1px solid red;
     border-radius: 5px;
+}
+
+.chapter_link {
+    border: 1px solid red;
+}
+
+.chapter_link a {
+    margin: 0 auto;
+}
+
+.chapter-rating {
+    margin: 0 10px 0 auto;
 }
 
 .volume_list li:hover {
