@@ -49,9 +49,6 @@
                                             </a>
                                         </div>
                                         <div class="chapter-rating">
-                                            <!-- Процентное соотношение -->
-                                            
-                                            
                                             <!-- Кнопки оценки -->
                                             <div class="rating-buttons">
                                                 {% if user.is_authenticated %}
@@ -60,35 +57,28 @@
                                                             data-action="like">
                                                         👍 <span class="count">{{ chapter.like_count }}</span>
                                                     </button>
-                                                        <div class="rating-percentage">
-                                                            <div class="like-bar" style="width: {{ chapter.like_percentage }}%">
-                                                                <span class="percentage-text">{{ chapter.like_percentage }}%</span>
-                                                            </div>
-            {#                                                <div class="dislike-bar" style="width: {{ chapter.dislike_percentage }}%">#}
-            {#                                                    <span class="percentage-text">{{ chapter.dislike_percentage }}%</span>#}
-            {#                                                </div>#}
-                                                        </div>
                                                     <button class="dislike-btn {% if user_reaction == False %}active{% endif %}" 
                                                             data-action="dislike">
                                                         👎 <span class="count">{{ chapter.dislike_count }}</span>
                                                     </button>
+
                                                     {% endwith %}
                                                 {% else %}
                                                     <button class="like-btn" data-action="like" onclick="alert('Для оценки необходимо войти в систему')">
                                                         👍 <span class="count">{{ chapter.like_count }}</span>
                                                     </button>
-                                                    <div class="rating-percentage">
-                                                        <div class="like-bar" style="width: {{ chapter.like_percentage }}%">
-                                                            <span class="percentage-text">{{ chapter.like_percentage }}%</span>
-                                                        </div>
-        {#                                                <div class="dislike-bar" style="width: {{ chapter.dislike_percentage }}%">#}
-        {#                                                    <span class="percentage-text">{{ chapter.dislike_percentage }}%</span>#}
-        {#                                                </div>#}
-                                                    </div>
                                                     <button class="dislike-btn" data-action="dislike" onclick="alert('Для оценки необходимо войти в систему')">
                                                         👎 <span class="count">{{ chapter.dislike_count }}</span>
                                                     </button>
                                                 {% endif %}
+                                            </div>
+                                            <div class="rating-percentage">
+                                                <div class="like-bar" style="width: {{ chapter.like_percentage }}%">
+                                                    <span class="percentage-text">{{ chapter.like_percentage }}%</span>
+                                                </div>
+{#                                                <div class="dislike-bar" style="width: {{ chapter.dislike_percentage }}%">#}
+{#                                                    <span class="percentage-text">{{ chapter.dislike_percentage }}%</span>#}
+{#                                                </div>#}
                                             </div>
                                         </div>
                                     </div>
