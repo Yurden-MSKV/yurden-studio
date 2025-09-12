@@ -199,32 +199,79 @@ body, html {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0 25px 0 auto;
-    width: 75px;
-    /*border: 1px solid red;*/
+    margin: 0 15px 0 auto;
+    /*width: 75px;*/
+    border: 1px solid red;
 
 }
 
 .rating-buttons {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: -15px;
 }
 
 .rating-buttons button {
     display: flex;
     flex-direction: row;
+    border: none;
+    background: none;
+}
+
+.like-btn {
+    margin-bottom: -6px;
+}
+
+.dislike-btn {
+    margin-top: -6px;
+}
+
+/* Базовые стили для иконок */
+.like-btn img,
+.dislike-btn img {
+    width: 30px;
+    height: 30px;
+    /*filter: invert(1); !* Белый цвет по умолчанию *!*/
+    transition: filter 0.2s ease;
+    /*border: 1px solid red;*/
+}
+
+/* Лайк - активное состояние (#339900) */
+.like-btn.active img {
+    filter: invert(48%) sepia(95%) saturate(500%) hue-rotate(60deg) brightness(110%);
+}
+
+/* Дизлайк - активное состояние (#CC0000) */
+.dislike-btn.active img {
+    filter: invert(20%) sepia(95%) saturate(5000%) hue-rotate(350deg);
+}
+
+/* Лайк - ховер (#339900) */
+.like-btn:hover:not(.active) img {
+    filter: invert(48%) sepia(95%) saturate(500%) hue-rotate(60deg) brightness(110%);
+}
+
+/* Дизлайк - ховер (#CC0000) */
+.dislike-btn:hover:not(.active) img {
+    filter: invert(20%) sepia(95%) saturate(5000%) hue-rotate(350deg);
 }
 
 .rating-percentage {
     display: flex;
-    align-items: center;
-    margin-left: 8px;
-    width: 100%;
+    /*align-items: center;*/
+    justify-content: center;
+    /*margin-left: 8px;*/
+    /*width: 100%;*/
     height: fit-content;
     /*border: 1px solid deepskyblue;*/
 }
 
+.like-bar {
+    width: inherit !important;
+    /*border: 1px solid green;*/
+}
+
 .rating-percentage span {
-    text-align: left;
+    /*text-align: center;*/
+    /*border: 1px solid red;*/
 }
