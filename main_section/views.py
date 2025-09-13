@@ -5,6 +5,7 @@ from django.utils import timezone
 from manga_section.models import Chapter, Volume
 from post_section.models import Post
 
+
 def index(request):
     return render(request, 'top_panel.html')
 

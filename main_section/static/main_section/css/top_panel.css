@@ -12,6 +12,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'ClearSans';
+    src: url('../fonts/ClearSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
 body, html {
     width: 100%;
     margin: 0;
@@ -36,7 +43,7 @@ body, html {
     align-items: center;
     background: #AA4A44 !important;
     /*border: 2px solid #000000;*/
-    border-radius: 5px;
+    border-radius: 45px;
 }
 
 /*.top_panel_container a {*/
@@ -67,7 +74,8 @@ body, html {
 
 .site_name_container p {
     font-size: 20px;
-    font-weight: bold;
+    /*font-weight: bold;*/
+    font-weight: 500;
 }
 
 .buttons_container {
@@ -85,7 +93,8 @@ body, html {
 /*    text-decoration: none;*/
 /*    color: black;*/
     font-size: 18px;
-    font-weight: bold;
+    /*font-weight: bold;*/
+    font-weight: 500;
 /*    padding: 2px 5px;*/
 /*    width: fit-content;*/
 /*    !*border: 1px solid red;*!*/
@@ -106,7 +115,7 @@ body, html {
     padding: 2px 5px;
     text-decoration: none;
     color: #FFFFFF;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .main_page_link:hover {
@@ -121,7 +130,7 @@ body, html {
 
 .catalog_link a {
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 500;
     color: #FFFFFF;
     padding: 2px 5px;
 }
@@ -138,7 +147,7 @@ body, html {
 
 .info_link a {
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 500;
     color: #FFFFFF;
     padding: 2px 5px;
 }
@@ -154,21 +163,39 @@ body, html {
     margin-right: 20px;
     /*border: 1px solid red;*/
     border-radius: 5px;
+    height: 30px;
+    gap: 5px
 }
 
 .profile_container p {
     font-size: 18px;
+    padding: 3px 0 0 0;
+    margin: 0;
 }
 
 .profile_container a {
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 500;
     color: #FFFFFF;
     padding: 2px 5px;
     font-size: 18px;
-    border: 1px solid deepskyblue;
 }
 
-.profile_container:hover {
+/*.profile_container:hover {*/
+/*    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);*/
+/*}*/
+
+.login {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.login:hover {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.login a {
+    margin: 0;
+    padding: 2px 5px;
 }

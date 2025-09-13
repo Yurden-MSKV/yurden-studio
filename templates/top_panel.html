@@ -38,9 +38,13 @@
                     {% if user.is_authenticated %}
                         <p>{{ user.username }}</p>
                     {% else %}
-                        <a href="#">Войти</a>
+                        <div class="login">
+                            <a href="{% url 'login' %}">Войти</a>
+                        </div>
                         <p>|</p>
-                        <a href="#">Зарегистрироваться</a>
+                        <div class="login">
+                            <a href="#">Зарегистрироваться</a>
+                        </div>
                     {% endif %}
                 </div>
             </div>
