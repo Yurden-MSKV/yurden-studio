@@ -1,7 +1,12 @@
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from decimal import Decimal
 
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_POST
+
 from manga_section.models import Manga, Chapter, ChapterImage
+from main_section.models import ChapterLike
 
 from django.shortcuts import render, get_object_or_404
 
@@ -28,7 +33,7 @@ def manga_page(request, slug):
     }
     return render(request, 'manga_page.html', context)
 
-
+@ensure_csrf_cookie
 def chapter_page(request, manga_slug, ch_number):
     # Ищем мангу по slug
     manga = get_object_or_404(Manga, manga_slug=manga_slug)
@@ -46,9 +51,95 @@ def chapter_page(request, manga_slug, ch_number):
 
     images = ChapterImage.objects.filter(chapter=chapter).order_by('page_number')
 
+    # Получаем статистику оценок
+    likes_count = ChapterLike.objects.filter(chapter=chapter, is_like=True).count()
+    dislikes_count = ChapterLike.objects.filter(chapter=chapter, is_like=False).count()
+    total_ratings = likes_count + dislikes_count
+
+    if total_ratings > 0:
+        like_percentage = round((likes_count / total_ratings) * 100)
+    else:
+        like_percentage = 0
+
+    # Проверяем оценку текущего пользователя
+    user_rating = None
+    if request.user.is_authenticated:
+        try:
+            user_like = ChapterLike.objects.get(user=request.user, chapter=chapter)
+            user_rating = 'like' if user_like.is_like else 'dislike'
+        except ChapterLike.DoesNotExist:
+            pass
+
     context = {
         'manga': manga,
         'chapter': chapter,
         'images': images,
+        'like_percentage': like_percentage,
+        'user_rating': user_rating,
     }
     return render(request, 'chapter_page.html', context)
+
+
+@login_required
+@require_POST
+def rate_chapter(request, manga_slug, ch_number):
+    """Обработка оценки главы"""
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Требуется авторизация'}, status=401)
+
+    manga = get_object_or_404(Manga, manga_slug=manga_slug)
+
+    try:
+        chapter = Chapter.objects.get(
+            volume__manga=manga,
+            ch_number=ch_number
+        )
+    except Chapter.DoesNotExist:
+        return JsonResponse({'error': 'Глава не найдена'}, status=404)
+
+    is_like = request.POST.get('is_like')
+    if is_like is None:
+        return JsonResponse({'error': 'Не указан тип оценки'}, status=400)
+
+    is_like = is_like.lower() == 'true'
+
+    # Проверяем, есть ли уже оценка от пользователя
+    try:
+        existing_like = ChapterLike.objects.get(user=request.user, chapter=chapter)
+
+        # Если пользователь нажимает на ту же кнопку - удаляем оценку
+        if existing_like.is_like == is_like:
+            existing_like.delete()
+            user_rating = None
+        else:
+            # Если нажимает на другую кнопку - меняем оценку
+            existing_like.is_like = is_like
+            existing_like.save()
+            user_rating = 'like' if is_like else 'dislike'
+
+    except ChapterLike.DoesNotExist:
+        # Если оценки нет - создаем новую
+        ChapterLike.objects.create(
+            user=request.user,
+            chapter=chapter,
+            is_like=is_like
+        )
+        user_rating = 'like' if is_like else 'dislike'
+
+    # Получаем обновленную статистику оценок
+    likes_count = ChapterLike.objects.filter(chapter=chapter, is_like=True).count()
+    dislikes_count = ChapterLike.objects.filter(chapter=chapter, is_like=False).count()
+    total_ratings = likes_count + dislikes_count
+
+    if total_ratings > 0:
+        like_percentage = round((likes_count / total_ratings) * 100)
+    else:
+        like_percentage = 0
+
+    # Возвращаем HTML фрагмент
+    return render(request, 'partials/rating_block.html', {
+        'manga': manga,
+        'chapter': chapter,
+        'like_percentage': like_percentage,
+        'user_rating': user_rating
+    })

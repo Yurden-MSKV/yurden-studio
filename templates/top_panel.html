@@ -4,6 +4,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    
+    {% block htmx_code %}
+
+    {% endblock %}
+
     {% block title %}
         
     {% endblock %}
@@ -30,7 +35,13 @@
                     </div>
                 </div>
                 <div class="profile_container">
-                    <a href="#">Мой профиль</a>
+                    {% if user.is_authenticated %}
+                        <p>{{ user.username }}</p>
+                    {% else %}
+                        <a href="#">Войти</a>
+                        <p>|</p>
+                        <a href="#">Зарегистрироваться</a>
+                    {% endif %}
                 </div>
             </div>
     

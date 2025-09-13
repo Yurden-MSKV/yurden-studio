@@ -1,0 +1,23 @@
+{% load static %}
+
+<div class="rating_block">
+    <button class="like-btn {% if user_rating == 'like' %}active{% endif %}" 
+            hx-post="{% url 'rate-chapter' manga_slug=manga.manga_slug ch_number=chapter.ch_number %}"
+            hx-vals='{"is_like": "true"}'
+            hx-target=".rating_block"
+            hx-swap="outerHTML">
+        <img src="{% static 'manga_section/icons/arrow_up.svg' %}">
+    </button>
+    
+    <div class="rate_percentage">
+        <p id="like-percentage">{{ like_percentage }}%</p>
+    </div>
+    
+    <button class="dislike-btn {% if user_rating == 'dislike' %}active{% endif %}" 
+            hx-post="{% url 'rate-chapter' manga_slug=manga.manga_slug ch_number=chapter.ch_number %}"
+            hx-vals='{"is_like": "false"}'
+            hx-target=".rating_block"
+            hx-swap="outerHTML">
+        <img src="{% static 'manga_section/icons/arrow_down.svg' %}">
+    </button>
+</div>

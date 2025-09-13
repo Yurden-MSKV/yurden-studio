@@ -156,12 +156,17 @@ body, html {
     border-radius: 5px;
 }
 
+.profile_container p {
+    font-size: 18px;
+}
+
 .profile_container a {
     text-decoration: none;
     font-weight: bold;
     color: #FFFFFF;
     padding: 2px 5px;
     font-size: 18px;
+    border: 1px solid deepskyblue;
 }
 
 .profile_container:hover {

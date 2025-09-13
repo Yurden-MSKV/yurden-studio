@@ -6,14 +6,45 @@
 {% endblock %}
 
 {% block content %}
-    {# TODO: добавить в static файл chapter_page.css из старого проекта #}
-{#    <link rel="stylesheet" href="{% static 'manga_section/css/chapter_page.css' %}">#}
-    <div class="main_container">
-        {% for image in images %}
-            <div class="image_block">
-                <img src="{{ image.page_image.url }}">
+    <link rel="stylesheet" href="{% static 'manga_section/css/chapter_page.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            htmx.config.useTemplateFragments = true;
+            
+            document.body.addEventListener('htmx:configRequest', function(evt) {
+                evt.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+            });
+        });
+    </script>
+    
+    <div class="container">
+    
+        <div class="main_container">
+            {% for image in images %}
+                <div class="image_block">
+                    <img src="{{ image.page_image.url }}">
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="side_bar">
+            <div class="credits">
+                <h1>Переводчик:</h1>
+                <h2>    ---</h2>
+                <h1>Редактор:</h1>
+                <h2>    ---</h2>
+                <h1>Ретушёр:</h1>
+                <h2>    ---</h2>
+                <h1>Переводчик:</h1>
+                <h2>    ---</h2>
             </div>
-        {% endfor %}
+            
+            <!-- Включаем partial напрямую -->
+            {% include 'partials/rating_block.html' with manga=manga chapter=chapter like_percentage=like_percentage user_rating=user_rating %}
+            
+        </div>
+    
     </div>
-
 {% endblock %}
