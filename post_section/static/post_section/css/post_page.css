@@ -12,6 +12,20 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'ClearSans';
+    src: url('../fonts/ClearSans-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'ClearSans';
+    src: url('../fonts/ClearSans-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
 body, html {
     width: 100%;
     margin: 0;
@@ -68,11 +82,25 @@ body, html {
 }
 
 .post_content {
-    margin: 0 10px 10px 10px;
+    margin: 10px;
+}
+
+.post_content h1, .post_content h2, .post_content h3 {
+    margin: 25px 0 10px 0;
+
 }
 
 .post_content p {
     margin: 0;
     padding: 0;
     /*border: 1px solid red;*/
+}
+
+.post_content p:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.post_content a:link, .post_content a:visited {
+    color: blue;
+    text-decoration: none;
 }

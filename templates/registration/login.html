@@ -6,31 +6,36 @@
     <title>Вход</title>
 </head>
 <body>
-    <div class="login-box">
-        <link rel="stylesheet" href="{% static 'main_section/css/login.css' %}">
-        <h2>Вход в систему</h2>
-        
-        {% if form.errors %}
-            <p style="color: red;">Неверное имя пользователя или пароль.</p>
-        {% endif %}
-        
-        <form method="post">
-            {% csrf_token %}
+    <div class="main_container">
+        <div class="login_box">
+            <link rel="stylesheet" href="{% static 'main_section/css/login.css' %}">
+            <h2>Вход в аккаунт</h2>
             
-            <div>
-                <label for="id_username">Имя пользователя:</label>
-                {{ form.username }}
+            {% if form.errors %}
+                <p style="color: red;">Неверное имя пользователя или пароль.</p>
+            {% endif %}
+            
+            <form method="post" class="login_form">
+                {% csrf_token %}
+                
+                <div>
+                    <label for="id_username">Никнейм:</label>
+                    {{ form.username }}
+                </div>
+                
+                <div>
+                    <label for="id_password">Пароль:</label>
+                    {{ form.password }}
+                </div>
+                
+                <div class="btn_block">
+                    <button class="login_btn" type="submit">Войти</button>
+                </div>
+            </form>
+            <div class="another_action">
+                <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
             </div>
-            
-            <div>
-                <label for="id_password">Пароль:</label>
-                {{ form.password }}
-            </div>
-            
-            <button type="submit">Войти</button>
-        </form>
-        
-    {#    <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>#}
+        </div>
     </div>
 </body>
 </html>

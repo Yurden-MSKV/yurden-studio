@@ -43,7 +43,7 @@ body, html {
     align-items: center;
     background: #AA4A44 !important;
     /*border: 2px solid #000000;*/
-    border-radius: 45px;
+    border-radius: 5px;
 }
 
 /*.top_panel_container a {*/
@@ -163,14 +163,71 @@ body, html {
     margin-right: 20px;
     /*border: 1px solid red;*/
     border-radius: 5px;
-    height: 30px;
+    /*height: 30px;*/
     gap: 5px
 }
 
 .profile_container p {
-    font-size: 18px;
-    padding: 3px 0 0 0;
+    color: white;
+    font: 500 18px 'ClearSans', sans-serif;
+    /*padding: 3px 0 0 0;*/
     margin: 0;
+}
+
+.profile_menu {
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    margin-right: 10px;
+    top: calc(25px);
+    left: calc(50% + 500px + 10px);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu_item {
+    display: flex;
+    /*border: 1px solid red;*/
+    width: inherit;
+    padding: 2px 5px;
+}
+
+.menu_item:not(:last-child) {
+    border-bottom: 2px solid black;
+}
+
+.menu_item a {
+    display: flex;
+    text-decoration: none;
+    color: black;
+    /*border: 1px solid red;*/
+}
+
+.menu_item a img {
+    width: 24px
+}
+
+.menu_item a p {
+    margin: 0;
+    padding: 0;
+}
+
+.profile_container button {
+    border: none;
+    border-radius: 5px;
+    background: none;
+}
+
+.profile_container button:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
 .profile_container a {

@@ -31,29 +31,59 @@
                         <a href="#">Каталог</a>
                     </div>
                     <div class="info_link">
-                        <a href="#">Инфо</a>
+                        <a href="{% url 'info' %}">Инфо</a>
                     </div>
                 </div>
                 <div class="profile_container">
                     {% if user.is_authenticated %}
-                        <p>{{ user.username }}</p>
+                        <button class="profile_menu_btn" onclick="toggleMenu()"><p>{{ user.username }}</p></button>
                     {% else %}
                         <div class="login">
                             <a href="{% url 'login' %}">Войти</a>
                         </div>
                         <p>|</p>
                         <div class="login">
-                            <a href="#">Зарегистрироваться</a>
+                            <a href="{% url 'register' %}">Зарегистрироваться</a>
                         </div>
                     {% endif %}
                 </div>
             </div>
+            {% if user.is_authenticated %}
+                <div class="profile_menu" id="userMenu">
+                    {% if user.username == 'yurden' %}
+                        <div class="menu_item">
+                            <a href="/admin/"><img src="{% static 'main_section/icons/admin.svg' %}"><p>Админка</p></a>
+                        </div>
+                    {% endif %}
+                    <div class="menu_item">
+                        <a href="{% url 'logout' %}"><img src="{% static 'main_section/icons/logout.svg' %}"><p>Выйти</p></a>
+                    </div>
+                </div>
+            {% endif %}
     
         {% endblock %}
 
         {% block content %}
         
         {% endblock %}
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('userMenu');
+            menu.classList.toggle('show');
+        }
+        
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('userMenu');
+            const button = document.querySelector('.profile_menu_btn');
+            
+            if (!menu.contains(event.target) && !button.contains(event.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    </script>
+    
+{#<script src="{% static 'main_section/js/top_panel.js' %}"></script>#}
 
 </body>
 </html>

@@ -1,9 +1,117 @@
-.login-box {
+@font-face {
+    font-family: 'ClearSans';
+    src: url('../fonts/ClearSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ClearSans';
+    src: url('../fonts/ClearSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ClearSans';
+    src: url('../fonts/ClearSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'ClearSans';
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.main_container {
+    display: flex;
+    width: inherit;
+    height: inherit;
+    border: 1px solid deepskyblue;
+}
+
+.login_box {
     display: flex;
     flex-direction: column;
+    gap: 10px;
     width: fit-content;
     height: fit-content;
-    align-self: center;
     margin: auto;
-    border: 1px solid red;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.login_box h2 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    /*border: 1px solid red;*/
+}
+
+.login_form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login_form label {
+    font-size: 16px;
+}
+
+.login_form input {
+    padding: 5px 10px;
+    border: 2px solid darkgray;
+    border-radius: 5px;
+}
+
+.login_form input:focus {
+    outline: none;
+    /*border-color: #ddd; !* Оставляем обычный цвет границы *!*/
+    /*box-shadow: none; !* Убираем тень если есть *!*/
+}
+
+.btn_block {
+    display: flex;
+    width: fit-content;
+    margin: 0 30px 0 auto;
+}
+
+.login_btn {
+    font: 17px 'ClearSans';
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    padding: 2px 5px;
+    background: none;
+    border: 2px solid darkgray;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.another_action {
+    margin: 5px auto 0 auto;
+}
+
+.another_action p {
+    margin: 0;
+    padding: 0;
+}
+
+.another_action a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 17px;
+    color: black;
+    padding: 2px 5px;
+    border: 2px solid darkgray;
+    border-radius: 5px;
 }
