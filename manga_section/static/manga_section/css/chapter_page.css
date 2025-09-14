@@ -54,7 +54,7 @@ body, html {
     display: flex;
     flex-direction: column;
     position: fixed; /* Абсолютное позиционирование */
-    top: calc(10px + 45px + 10px);
+    top: calc(95px);
     left: calc(50% + 500px + 10px);
     align-items: center;
     width: fit-content;
@@ -72,7 +72,14 @@ body, html {
     /*border: 1px solid deepskyblue;*/
 }
 
-.credits h1, h2, h3 {
+.credits h1 {
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+}
+
+.credits h2, h3 {
     font-size: 17px;
     font-weight: normal;
     margin: 0;
@@ -82,6 +89,15 @@ body, html {
 
 .credits h2 {
     text-align: right;
+}
+
+.credits a {
+    text-decoration: none;
+    color: black;
+}
+
+.credits a:hover {
+    text-decoration: underline;
 }
 
 .rate_title {

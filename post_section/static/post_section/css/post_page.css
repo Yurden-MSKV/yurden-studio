@@ -104,3 +104,24 @@ body, html {
     color: blue;
     text-decoration: none;
 }
+
+.side_bar {
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Абсолютное позиционирование */
+    top: calc(95px);
+    right: calc(50% + 500px + 10px);
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.menu_item {
+    padding: 2px 2px 2px 5px;
+}
+
+.menu_item img {
+    width: 24px
+}

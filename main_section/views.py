@@ -48,9 +48,7 @@ def main_page(request):
                  to_attr='latest_volumes')
     ).order_by('-add_date')
 
-    recent_posts = Post.objects.filter(
-        add_date__gte=last_week
-    ).order_by('-add_date')
+    recent_posts = Post.objects.filter(add_date__gte=last_week, visibility=True).order_by('-add_date')
 
     manga_dict = {}
     for chapter in recent_chapters:

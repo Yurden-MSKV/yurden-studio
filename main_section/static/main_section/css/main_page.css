@@ -209,7 +209,7 @@ body, html {
 }
 
 .post_block_content {
-    margin: 0 0 10px 10px;
+    margin: 0 10px 10px 10px;
     width: fit-content;
     /*border: 1px solid red;*/
 }

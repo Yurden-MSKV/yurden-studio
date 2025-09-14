@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.db import models
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
-from manga_section.models import (Genre, Author, Manga, Volume, Chapter, ChapterImage)
+from manga_section.models import (Genre, Author, Manga, Volume, Chapter, ChapterImage, Staff)
 
 
 # Кастомный виджет для множественной загрузки файлов
@@ -127,6 +127,7 @@ class VolumeAdmin(admin.ModelAdmin):
 class ChapterAdmin(admin.ModelAdmin):
     list_display = ['get_manga_name', 'get_vol_number', 'ch_number', 'ch_name']
     search_fields = ['ch_number', 'ch_name']
+    filter_horizontal = ['interpreter', 'editor', 'retoucher', 'typesetter', 'sfx_artist']
 
     # Добавляем кастомный шаблон для массовой загрузки
     change_form_template = 'admin/manga_section/chapter_change_form.html'
@@ -177,3 +178,7 @@ class ChapterAdmin(admin.ModelAdmin):
             return HttpResponseRedirect(request.path)
 
         return super().response_change(request, obj)
+
+@admin.register(Staff)
+class StaffAdmin(admin.ModelAdmin):
+    list_display = ['staff_name', 'link_for_offers']

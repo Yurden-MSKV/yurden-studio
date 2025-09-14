@@ -31,14 +31,36 @@
         
         <div class="side_bar">
             <div class="credits">
-                <h1>Переводчик:</h1>
-                <h2>    ---</h2>
-                <h1>Редактор:</h1>
-                <h2>    ---</h2>
-                <h1>Ретушёр:</h1>
-                <h2>    ---</h2>
-                <h1>Переводчик:</h1>
-                <h2>    ---</h2>
+                {% if chapter.interpreter.all %}
+                    <h1>Переводчик:</h1>
+                    {% for person in chapter.interpreter.all %}
+                        <a href="{{ person.link_for_offers }}"><h2>{{ person.staff_name }}</h2></a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% if chapter.editor.all %}
+                    <h1>Редактор:</h1>
+                    {% for person in chapter.editor.all %}
+                        <a href="{{ person.link_for_offers }}"><h2>{{ person.staff_name }}</h2></a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% if chapter.retoucher.all %}
+                    <h1>Ретушёр:</h1>
+                    {% for person in chapter.retoucher.all %}
+                        <a href="{{ person.link_for_offers }}"><h2>{{ person.staff_name }}</h2></a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% if chapter.typesetter.all %}
+                    <h1>Верстальщик:</h1>
+                    {% for person in chapter.typesetter.all %}
+                        <a href="{{ person.link_for_offers }}"><h2>{{ person.staff_name }}</h2></a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% if chapter.sfx_artist.all %}
+                    <h1>Художник по звукам:</h1>
+                    {% for person in chapter.sfx_artist.all %}
+                        <a href="{{ person.link_for_offers }}"><h2>{{ person.staff_name }}</h2></a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
             
             <!-- Включаем partial напрямую -->

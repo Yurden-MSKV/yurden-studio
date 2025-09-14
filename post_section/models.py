@@ -15,6 +15,8 @@ class Post(models.Model):
     view_count = models.PositiveIntegerField(default=0,
                                              editable=False,
                                              verbose_name='Счётчик просмотров')
+    visibility = models.BooleanField(default=True,
+                                     verbose_name='Отображение на главной')
 
     def __str__(self):
         return self.post_name

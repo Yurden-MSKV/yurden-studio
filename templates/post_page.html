@@ -27,4 +27,12 @@
             </div>
         </div>
     </div>
+    
+    {% if user.username == 'yurden' %}
+        <div class="side_bar">
+            <div class="menu_item">
+                <a href="/admin/post_section/post/{{ post.id }}/change/"><p>Редактировать</p><img src="{% static 'post_section/icons/edit.svg' %}"></a>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

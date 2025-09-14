@@ -18,8 +18,14 @@ class Author(models.Model):
     def __str__(self):
         return self.author_name
 
-    # def manga_cover_path(instance, filename):
-    #     return f'manga/covers/{instance.id}/{filename}'
+class Staff(models.Model):
+    staff_name = models.CharField(max_length=50,)
+    link_for_offers = models.URLField(max_length=250,
+                                      verbose_name='Ссылка для связи')
+
+    def __str__(self):
+        return self.staff_name
+    
 
 class Manga(models.Model):
     manga_name = models.CharField(max_length=150,
@@ -68,6 +74,31 @@ class Chapter(models.Model):
                                verbose_name='Название')
     add_date = models.DateTimeField(auto_now_add=True,
                                     verbose_name='Дата и время создания')
+    interpreter = models.ManyToManyField(Staff,
+                                         verbose_name='Переводчик',
+                                         related_name='interpreters',
+                                         blank=True,
+                                         default=None)
+    editor = models.ManyToManyField(Staff,
+                                    verbose_name='Редактор',
+                                    related_name='editors',
+                                    blank=True,
+                                    default=None)
+    retoucher = models.ManyToManyField(Staff,
+                                       verbose_name='Ретушёр',
+                                       related_name='retouchers',
+                                       blank=True,
+                                       default=None)
+    typesetter = models.ManyToManyField(Staff,
+                                        verbose_name='Верстальщик',
+                                        related_name='typesetters',
+                                        blank=True,
+                                        default=None)
+    sfx_artist = models.ManyToManyField(Staff,
+                                        verbose_name='Художник по звукам',
+                                        related_name='sfx_artists',
+                                        blank=True,
+                                        default=None)
 
     def __str__(self):
         return f'Глава {str(self.ch_number)}'
