@@ -9,17 +9,16 @@ def post_page(request, post_slug):
         'post': post,
     }
 
-    session_key = f'article_{post.id}_viewed'
-
-    if not request.session.get(session_key, False):
-        # Если ключа нет — пользователь ещё не смотрел статью
+    # Проверяем, есть ли куки, что пользователь уже просматривал этот пост
+    viewed_key = f'viewed_post_{post.id}'
+    if not request.COOKIES.get(viewed_key):
+        # Увеличиваем счетчик просмотров
         post.view_count += 1
         post.save()
 
-        # Устанавливаем флаг, что пользователь уже смотрел
-        request.session[session_key] = True
-
-        # Устанавливаем время жизни сессии (5 минут)
-        request.session.set_expiry(300)
+        # Устанавливаем куки на 5 минут (300 секунд)
+        response = render(request, 'post_page.html', {'post': post})
+        response.set_cookie(viewed_key, 'true', max_age=300)
+        return response
 
     return render(request, 'post_page.html', context)

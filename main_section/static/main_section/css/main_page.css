@@ -199,12 +199,23 @@ body, html {
 .post_block_title {
     margin: 10px 0 10px 10px;
     width: fit-content;
-    /*border: 1px solid red;*/
+    border-radius: 5px;
+}
+
+.post_block_title:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.post_block_title a {
+    text-decoration: none;
+    color: black;
+    padding: 0;
+    margin: 0;
 }
 
 .post_block_title h1 {
     margin: 0;
-    padding: 0;
+    padding: 2px 5px;
     font-size: 20px;
 }
 

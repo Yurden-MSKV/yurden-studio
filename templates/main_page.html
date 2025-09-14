@@ -51,13 +51,10 @@
                 {% for post in recent_post %}
                     <div class="post_block">
                         <div class="post_block_title">
-                            <h1>{{ post.post_name }} ({{ post.add_date|date:"d.m.Y" }})</h1>
+                            <a href="{% url 'post-page' post_slug=post.post_slug %}"><h1>{{ post.post_name }} ({{ post.add_date|date:"d.m.Y" }})</h1></a>
                         </div>
                         <div class="post_block_content">
                             <p>{{ post.get_short_content_safe }}</p>
-                        </div>
-                        <div class="read_more">
-                            <a href="{% url 'post-page' post_slug=post.post_slug %}">Читать целиком</a>
                         </div>
                     </div>
                 {% endfor %}
