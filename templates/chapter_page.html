@@ -1,4 +1,5 @@
 {% extends "top_panel.html" %}
+{% load custom_filters %}
 {% load static %}
 
 {% block title %}
@@ -19,15 +20,62 @@
         });
     </script>
     
+    <div class="reader_selector">
+        <select onchange="changeReadingMode(this.value)">
+            <option value="rtl" {% if reading_mode == 'rtl' %} selected {% endif %}>По-японски</option>
+            <option value="vertical" {% if reading_mode == 'vertical' %} selected {% endif %}>Полотно</option>
+        </select>
+    </div>
+    
     <div class="container">
     
-        <div class="main_container">
-            {% for image in images %}
-                <div class="image_block">
-                    <img src="{{ image.page_image.url }}">
-                </div>
-            {% endfor %}
+        <div class="main_container" id="reader">
+            {% if reading_mode == 'vertical' %}
+                
+                {% for image in images %}
+                    <div class="image_block">
+                        <img src="{{ image.page_image.url }}">
+                    </div>
+                {% endfor %}
+            
+            {% elif reading_mode == 'rtl' %}
+                
+                {% for pair in page_pairs %}
+                    {% if pair|length == 1 and pair.0.is_double_page %}
+                        <!-- Одиночная страница-разворот -->
+                        <div class="page-pair single-spread">
+                            <img src="{{ pair.0.page_image.url }}" 
+                                 alt="Page {{ pair.0.page_number }}" 
+                                 class="page double-page"
+                                 data-page-number="{{ pair.0.page_number }}"
+                                 data-is-double="true">
+                        </div>
+                    {% elif pair|length == 2 %}
+                        <!-- Пара обычных страниц -->
+                        <div class="page-pair">
+                            <img src="{{ pair.0.page_image.url }}" 
+                                 alt="Page {{ pair.0.page_number }}" 
+                                 class="page normal-page"
+                                 data-page-number="{{ pair.0.page_number }}">
+                            <img src="{{ pair.1.page_image.url }}" 
+                                 alt="Page {{ pair.1.page_number }}" 
+                                 class="page normal-page"
+                                 data-page-number="{{ pair.1.page_number }}">
+                        </div>
+                    {% else %}
+                        <!-- Одиночная обычная страница (последняя непарная) -->
+                        <div class="page-pair">
+                            <img src="{{ pair.0.page_image.url }}" 
+                                 alt="Page {{ pair.0.page_number }}" 
+                                 class="page normal-page"
+                                 data-page-number="{{ pair.0.page_number }}">
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                
+            {% endif %}        
         </div>
+    
         
         <div class="side_bar">
             <div class="credits">
@@ -69,4 +117,5 @@
         </div>
     
     </div>
+    
 {% endblock %}

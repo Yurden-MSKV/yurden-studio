@@ -122,3 +122,7 @@ class ChapterImage(models.Model):
     page_number = models.PositiveIntegerField(verbose_name='Номер страницы')
     page_image = models.ImageField(upload_to=chapter_image_path,  # Используем функцию
                                    verbose_name='Страница')
+    is_double_page = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Страница {self.page_number}"
