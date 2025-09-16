@@ -38,8 +38,9 @@
                     </div>
                 {% endfor %}
             
+            {# TODO: переписать с нуля японский режим, этот блок не работает #}
             {% elif reading_mode == 'rtl' %}
-                
+            
                 {% for pair in page_pairs %}
                     {% if pair|length == 1 and pair.0.is_double_page %}
                         <!-- Одиночная страница-разворот -->
