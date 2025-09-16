@@ -19,6 +19,13 @@
     font-style: italic;
 }
 
+@font-face {
+    font-family: 'ClearSans';
+    src: url('../fonts/ClearSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
 body, html {
     width: 100%;
     margin: 0;
@@ -28,48 +35,221 @@ body, html {
 }
 
 .container {
-    display: block; /* Меняем flex на block */
+    display: block;
     position: relative;
     max-width: 1400px;
     margin: 0 auto;
     padding: 10px 20px;
 }
 
+/* Селектор режима чтения */
+.reader_selector {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.reader_selector select {
+    padding: 5px 10px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background: #FAFAFA;
+    font-family: ClearSans, sans-serif;
+}
+
+.back_to_manga {
+    position: fixed;
+    top: 20px;
+    right: calc(100% - 230px);
+}
+
+.back_to_manga a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.back_to_manga a:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.back_to_manga img {
+    width: 22px;
+}
+
 .main_container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background: #FAFAFA;
-    width: 1000px;
-    max-width: 1000px;
-    gap: 10px;
-    padding: 10px 0;
-    height: fit-content;
-    margin: 0 auto; /* Центрируем основной контент */
-    border: 2px solid #000000;
-    border-radius: 5px;
+    width: fit-content;
+    margin: 0 auto;
+    /*border: 2px solid #000000;*/
+    /*border-radius: 5px;*/
+    border-left: 2px solid black;
+    border-right: 2px solid black;
 }
 
+/* Навигационная панель */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.manga_link a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.manga_link a:hover {
+    text-decoration: underline;
+}
+
+.manga_link img {
+    width: 16px;
+    height: 16px;
+}
+
+.chapter_info p {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.navigate_buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav_arrow {
+    padding: 8px 12px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background: #FAFAFA;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.nav_arrow:hover {
+    background-color: #e0e0e0;
+}
+
+.page_bar p {
+    margin: 0;
+    font-size: 14px;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* Контейнер для чтения */
+.read_container {
+    /*width: 95%;*/
+    /*min-height: 600px;*/
+    /*margin: 20px 0;*/
+    position: relative;
+    padding: 0 10px;
+}
+
+/* Стили для пар страниц */
+.page-pair {
+    display: none;
+    justify-content: center;
+    /*gap: 10px;*/
+    max-height: 730px;
+    /*margin: 20px 0;*/
+}
+
+.page-pair.active {
+    display: flex;
+}
+
+/* Контейнеры для отдельных страниц */
+.page-container {
+    flex: 1;
+    height: 730px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Контейнер для разворотной страницы */
+.spread-container {
+    width: 100%;
+    text-align: center;
+}
+
+.spread-container img {
+    height: 730px
+}
+
+/* Стили для изображений страниц */
+.page {
+    /*max-width: 100%;*/
+    height: inherit;
+    display: block;
+    /*border: 1px solid #ddd;*/
+    /*border-radius: 3px;*/
+    /*box-shadow: 0 2px 4px rgba(0,0,0,0.1);*/
+}
+
+/* Пустой контейнер для сохранения структуры */
+.page-container.empty {
+    background-color: #f0f0f0;
+    border: 1px dashed #ccc;
+    border-radius: 3px;
+}
+
+/* Скрытый класс */
+.hidden {
+    display: none;
+}
+
+/* Боковая панель */
 .side_bar {
     display: flex;
     flex-direction: column;
-    position: fixed; /* Абсолютное позиционирование */
-    top: calc(95px);
-    left: calc(50% + 500px + 10px);
+    position: fixed;
+    top: 20px;
+    left: calc(100% - 225px);
     align-items: center;
     width: fit-content;
     height: fit-content;
-    border: 2px solid black;
+    gap: 10px;
+    /*border: 2px solid black;*/
     border-radius: 5px;
+    /*background: #FAFAFA;*/
+    z-index: 900;
+}
+
+.current_ch {
+    margin-bottom: 10px;
+}
+
+.current_ch p {
+    font-weight: 500;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
 }
 
 .credits {
     display: flex;
     flex-direction: column;
-    margin: 10px 5px;
+    /*margin: 10px 5px;*/
     gap: 5px;
-    /*height: fit-content;*/
-    /*border: 1px solid deepskyblue;*/
 }
 
 .credits h1 {
@@ -84,7 +264,6 @@ body, html {
     font-weight: normal;
     margin: 0;
     padding: 0;
-    /*border: 1px solid limegreen;*/
 }
 
 .credits h2 {
@@ -126,9 +305,9 @@ body, html {
     padding: 2px 5px;
     background: none;
     border: none;
-    /*border: 1px solid limegreen;*/
     width: fit-content;
     height: fit-content;
+    cursor: pointer;
 }
 
 .like-btn img,
@@ -155,7 +334,6 @@ body, html {
 }
 
 .rate_percentage p {
-    /*border: 1px solid red;*/
     margin: 0;
     padding: 0px 0px 2px 0px;
 }

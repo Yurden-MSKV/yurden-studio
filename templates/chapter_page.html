@@ -1,4 +1,4 @@
-{% extends "top_panel.html" %}
+{#{% extends "top_panel.html" %}#}
 {% load custom_filters %}
 {% load static %}
 
@@ -20,65 +20,24 @@
         });
     </script>
     
-    <div class="reader_selector">
-        <select onchange="changeReadingMode(this.value)">
-            <option value="rtl" {% if reading_mode == 'rtl' %} selected {% endif %}>По-японски</option>
-            <option value="vertical" {% if reading_mode == 'vertical' %} selected {% endif %}>Полотно</option>
-        </select>
+{#    <div class="reader_selector">#}
+{#        <select onchange="changeReadingMode(this.value)">#}
+{#            <option value="rtl" {% if reading_mode == 'rtl' %} selected {% endif %}>По-японски</option>#}
+{#            <option value="vertical" {% if reading_mode == 'vertical' %} selected {% endif %}>Полотно</option>#}
+{#        </select>#}
+{#    </div>#}
+    
+    <div class="back_to_manga">
+    <a href="{% url 'manga-page' slug=manga.manga_slug %}">
+        <img src="{% static "manga_section/icons/arrow_back.svg" %}">
+        На страницу манги
+    </a>
     </div>
     
-    <div class="container">
-    
-        <div class="main_container" id="reader">
-            {% if reading_mode == 'vertical' %}
-                
-                {% for image in images %}
-                    <div class="image_block">
-                        <img src="{{ image.page_image.url }}">
-                    </div>
-                {% endfor %}
-            
-            {# TODO: переписать с нуля японский режим, этот блок не работает #}
-            {% elif reading_mode == 'rtl' %}
-            
-                {% for pair in page_pairs %}
-                    {% if pair|length == 1 and pair.0.is_double_page %}
-                        <!-- Одиночная страница-разворот -->
-                        <div class="page-pair single-spread">
-                            <img src="{{ pair.0.page_image.url }}" 
-                                 alt="Page {{ pair.0.page_number }}" 
-                                 class="page double-page"
-                                 data-page-number="{{ pair.0.page_number }}"
-                                 data-is-double="true">
-                        </div>
-                    {% elif pair|length == 2 %}
-                        <!-- Пара обычных страниц -->
-                        <div class="page-pair">
-                            <img src="{{ pair.0.page_image.url }}" 
-                                 alt="Page {{ pair.0.page_number }}" 
-                                 class="page normal-page"
-                                 data-page-number="{{ pair.0.page_number }}">
-                            <img src="{{ pair.1.page_image.url }}" 
-                                 alt="Page {{ pair.1.page_number }}" 
-                                 class="page normal-page"
-                                 data-page-number="{{ pair.1.page_number }}">
-                        </div>
-                    {% else %}
-                        <!-- Одиночная обычная страница (последняя непарная) -->
-                        <div class="page-pair">
-                            <img src="{{ pair.0.page_image.url }}" 
-                                 alt="Page {{ pair.0.page_number }}" 
-                                 class="page normal-page"
-                                 data-page-number="{{ pair.0.page_number }}">
-                        </div>
-                    {% endif %}
-                {% endfor %}
-                
-            {% endif %}        
-        </div>
-    
-        
-        <div class="side_bar">
+    <div class="side_bar">
+            <div class="current_ch">
+                <p>Глава {{ chapter.ch_number }}</p>
+            </div>
             <div class="credits">
                 {% if chapter.interpreter.all %}
                     <h1>Переводчик:</h1>
@@ -111,12 +70,145 @@
                     {% endfor %}
                 {% endif %}
             </div>
-            
+
             <!-- Включаем partial напрямую -->
             {% include 'partials/rating_block.html' with manga=manga chapter=chapter like_percentage=like_percentage user_rating=user_rating %}
-            
+
+        </div>
+    
+    <div class="main_container">
+
+{#        <div class="navigation">#}
+{#            <div class="manga_link">#}
+{#                <a href="{% url 'manga-page' slug=manga.manga_slug %}">#}
+{#                    <img src="{% static "manga_section/icons/arrow_back.svg" %}">#}
+{#                    На страницу манги#}
+{#                </a>#}
+{#            </div>#}
+{#            <div class="chapter_info">#}
+{#                <p>Глава {{ chapter.get_chapter_display }}</p>#}
+{#            </div>#}
+{#            <div class="navigate_buttons">#}
+{#                <button class="nav_arrow left_arrow" id="next-page" onclick="goToNextPage()">←</button>#}
+{#                <div class="page_bar" id="page-bar">#}
+{#                    <p id="current-pages">Страница 1</p>#}
+{#                </div>#}
+{#                <button class="nav_arrow right_arrow" id="prev-page" onclick="goToPreviousPage()">→</button>#}
+{#            </div>#}
+{#        </div>#}
+
+        <div class="read_container" id="reader">
+            <!-- Отображаем все пары страниц, но скрываем все кроме первой -->
+            {% for pair in page_pairs %}
+                <div class="page-pair {% if forloop.first %}active{% else %}hidden{% endif %}"
+                     data-pair-index="{{ forloop.counter0 }}">
+
+                    {% if pair|length == 1 and pair.0.is_double_page %}
+                        <!-- Разворотная страница (занимает оба места) -->
+                        <div class="spread-container">
+                            <img src="{{ pair.0.page_image.url }}"
+                                 class="page spread-page"
+                                 data-page-number="{{ pair.0.page_number }}"
+                                 alt="Страница {{ pair.0.page_number }}">
+                        </div>
+                    {% elif pair|length == 2 %}
+                        <!-- Две обычные страницы -->
+                        <div class="page-container left-page">
+                            <img src="{{ pair.1.page_image.url }}"
+                                 class="page normal-page"
+                                 data-page-number="{{ pair.1.page_number }}"
+                                 alt="Страница {{ pair.1.page_number }}">
+                        </div>
+                        <div class="page-container right-page">
+                            <img src="{{ pair.0.page_image.url }}"
+                                 class="page normal-page"
+                                 data-page-number="{{ pair.0.page_number }}"
+                                 alt="Страница {{ pair.0.page_number }}">
+                        </div>
+                    {% else %}
+                        <!-- Одиночная страница (последняя непарная) -->
+                        <div class="spread-container">
+                            <img src="{{ pair.0.page_image.url }}"
+                                 class="page normal-page"
+                                 data-page-number="{{ pair.0.page_number }}"
+                                 alt="Страница {{ pair.0.page_number }}">
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
         </div>
     
     </div>
+
+        <!-- JavaScript для управления навигацией -->
+    <script>
+        let currentPairIndex = 0;
+        const totalPairs = {{ page_pairs|length }};
+        const pagePairs = document.querySelectorAll('.page-pair');
+
+        // Функция для обновления отображаемой пары страниц
+        function updateDisplayedPair() {
+            // Скрываем все пары
+            pagePairs.forEach(pair => {
+                pair.classList.add('hidden');
+                pair.classList.remove('active');
+            });
+
+            // Показываем текущую пару
+            pagePairs[currentPairIndex].classList.remove('hidden');
+            pagePairs[currentPairIndex].classList.add('active');
+
+            // Обновляем информацию о текущих страницах
+            updatePageInfo();
+        }
+
+        // Функция для обновления информации о страницах
+        function updatePageInfo() {
+            const currentPair = pagePairs[currentPairIndex];
+            const pages = currentPair.querySelectorAll('.page[data-page-number]');
+
+            if (pages.length === 1) {
+                // Для разворотной страницы
+                document.getElementById('current-pages').textContent =
+                    `Страница ${pages[0].dataset.pageNumber}`;
+            } else if (pages.length === 2) {
+                // Для двух страниц
+                document.getElementById('current-pages').textContent =
+                    `Страницы ${pages[0].dataset.pageNumber}—${pages[1].dataset.pageNumber}`;
+            } else if (pages.length === 1 && currentPair.querySelector('.empty')) {
+                // Для одиночной страницы с пустым местом
+                document.getElementById('current-pages').textContent =
+                    `Страница ${pages[0].dataset.pageNumber}`;
+            }
+        }
+
+        // Переход к следующей паре страниц
+        function goToNextPage() {
+            if (currentPairIndex < totalPairs - 1) {
+                currentPairIndex++;
+                updateDisplayedPair();
+            }
+        }
+
+        // Переход к предыдущей паре страниц
+        function goToPreviousPage() {
+            if (currentPairIndex > 0) {
+                currentPairIndex--;
+                updateDisplayedPair();
+            }
+        }
+
+        // Обработка клавиш клавиатуры для навигации
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                goToPreviousPage();
+            } else if (event.key === 'ArrowLeft') {
+                goToNextPage();
+            }
+        });
+
+        // Инициализация при загрузке
+        updateDisplayedPair();
+    </script>
     
 {% endblock %}
